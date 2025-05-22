@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import random
+import os  # <-- needed for getting the PORT
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching for development
@@ -16,3 +17,7 @@ def flip():
     total = heads + tails
     message = "It's HEADS! Luck's on your side!" if result == 'head' else "It's TAILS! Try again or trust the toss."
     return render_template('index.html', result=result, message=message, heads=heads, tails=tails, total=total)
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))  # Get the port from environment
+    app.run(host='0.0.0.0', port=port)
